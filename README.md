@@ -16,7 +16,7 @@ The overall process is an endless loop: similarity scoring, encouragement and co
 
 The children's recitation, as well as all input and output involved, is done through text, without voice.
 
-Please design the database tables. Four or five tables will suffice, using MySQL. Keep it simple, just enough to accomplish the above tasks. 
+Here design the database tables. Four or five tables will suffice, using MySQL. Keep it simple, just enough to accomplish the above tasks. 
 1. Create a detailed flowchart.
 2. In the MySQL database design, clearly describe the function of each table and the meaning of each field.
 3. Provide a specific solution.

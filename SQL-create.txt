@@ -1,0 +1,38 @@
+CREATE DATABASE IF NOT EXISTS learning_bot DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;
+USE learning_bot;
+
+-- 问题表
+CREATE TABLE IF NOT EXISTS questions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question_text VARCHAR(255) NOT NULL,
+    answer_text TEXT NOT NULL,
+    hints JSON,  -- 存储提示的JSON数组
+    difficulty TINYINT DEFAULT 2 COMMENT '难度等级1-5'
+);
+
+-- 故事表
+CREATE TABLE IF NOT EXISTS stories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    content TEXT NOT NULL,
+    tags VARCHAR(100) COMMENT '逗号分隔的标签'
+);
+
+-- 孩子回答记录表
+CREATE TABLE IF NOT EXISTS child_responses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question_id INT NOT NULL,
+    child_answer TEXT NOT NULL,
+    is_correct TINYINT(1) NOT NULL COMMENT '0错误，1正确',
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (question_id) REFERENCES questions(id)
+);
+
+-- 会话状态表
+CREATE TABLE IF NOT EXISTS conversation_state (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    last_question_id INT,
+    last_interaction TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    state ENUM('waiting_question', 'waiting_answer') DEFAULT 'waiting_question',
+    FOREIGN KEY (last_question_id) REFERENCES questions(id)
+);
